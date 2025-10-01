@@ -53,12 +53,12 @@ impl CodeAgentServer {
             self.config.token_char_limit,
         ).await {
             Ok(r) => r,
-            Err(e) => return Err(format!("Failed to generate codebase report: {}", e)),
+            Err(e) => return Err(format!("Failed to generate codebase report: {e}")),
         };
 
         match self.config.gemini_client.generate_feature_plan(report, params.0.feature_prompt).await {
             Ok(plan) => Ok(plan),
-            Err(e) => Err(format!("Failed to generate feature plan from Gemini: {}", e)),
+            Err(e) => Err(format!("Failed to generate feature plan from Gemini: {e}")),
         }
     }
 
@@ -71,12 +71,12 @@ impl CodeAgentServer {
             self.config.token_char_limit,
         ).await {
             Ok(r) => r,
-            Err(e) => return Err(format!("Failed to generate codebase report: {}", e)),
+            Err(e) => return Err(format!("Failed to generate codebase report: {e}")),
         };
 
         match self.config.gemini_client.generate_bug_fix_plan(report, params.0.bug_description).await {
             Ok(plan) => Ok(plan),
-            Err(e) => Err(format!("Failed to generate bug fix plan from Gemini: {}", e)),
+            Err(e) => Err(format!("Failed to generate bug fix plan from Gemini: {e}")),
         }
     }
 
@@ -89,12 +89,12 @@ impl CodeAgentServer {
             self.config.token_char_limit,
         ).await {
             Ok(r) => r,
-            Err(e) => return Err(format!("Failed to generate codebase report: {}", e)),
+            Err(e) => return Err(format!("Failed to generate codebase report: {e}")),
         };
 
         match self.config.gemini_client.generate_explanation(report, params.0.explanation_query).await {
             Ok(explanation) => Ok(explanation),
-            Err(e) => Err(format!("Failed to generate explanation from Gemini: {}", e)),
+            Err(e) => Err(format!("Failed to generate explanation from Gemini: {e}")),
         }
     }
 }

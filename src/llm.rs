@@ -65,7 +65,7 @@ Your response should include:
 5. Sequential implementation steps at a high level
 
 Focus on architectural clarity and maintainability."#;
-        let user_prompt_1 = format!("Codebase Report:\n{}\n\nFeature Request: {}", context, prompt);
+        let user_prompt_1 = format!("Codebase Report:\n{context}\n\nFeature Request: {prompt}");
 
         let high_level_plan = self.query(&self.model, system_prompt_1, &user_prompt_1).await?;
 
@@ -84,7 +84,7 @@ Your response MUST include:
 8. Edge cases and error handling considerations
 
 Format your response in clear sections with markdown. Be specific and thorough."#;
-        let user_prompt_2 = format!("Codebase Report:\n{}\n\nOriginal Feature Request: {}\n\nHigh-Level Plan:\n{}\n\nNow provide the detailed implementation plan with specific file paths, code snippets, and clear instructions.", context, prompt, high_level_plan);
+        let user_prompt_2 = format!("Codebase Report:\n{context}\n\nOriginal Feature Request: {prompt}\n\nHigh-Level Plan:\n{high_level_plan}\n\nNow provide the detailed implementation plan with specific file paths, code snippets, and clear instructions/explanations.");
 
         self.query(&self.model, system_prompt_2, &user_prompt_2).await
     }
@@ -103,7 +103,7 @@ Your response should include:
 6. Potential side effects or risks of the fix
 
 Be thorough in your analysis and consider edge cases."#;
-        let user_prompt_1 = format!("Codebase Report:\n{}\n\nBug Description: {}", context, prompt);
+        let user_prompt_1 = format!("Codebase Report:\n{context}\n\nBug Description: {prompt}");
         let analysis = self.query(&self.model, system_prompt_1, &user_prompt_1).await?;
 
         let system_prompt_2 = r#"You are a senior software engineer implementing bug fixes.
@@ -120,7 +120,7 @@ Your response MUST include:
 7. Rollback plan if something goes wrong
 
 Format your response in clear sections with markdown. Provide actual code, not pseudocode."#;
-        let user_prompt_2 = format!("Codebase Report:\n{}\n\nBug Description: {}\n\nRoot Cause Analysis:\n{}\n\nNow provide the detailed fix implementation plan with specific file paths and code changes.", context, prompt, analysis);
+        let user_prompt_2 = format!("Codebase Report:\n{context}\n\nBug Description: {prompt}\n\nRoot Cause Analysis:\n{analysis}\n\nNow provide the detailed fix implementation plan with specific file paths and code changes.");
         self.query(&self.model, system_prompt_2, &user_prompt_2).await
     }
 
@@ -138,7 +138,7 @@ Your response should include:
 6. Any non-obvious implementation details
 
 Focus on providing a complete picture of the relevant system."#;
-        let user_prompt_1 = format!("Codebase Report:\n{}\n\nQuery: {}", context, prompt);
+        let user_prompt_1 = format!("Codebase Report:\n{context}\n\nQuery: {prompt}");
         let key_points = self.query(&self.model, system_prompt_1, &user_prompt_1).await?;
 
         let system_prompt_2 = r#"You are a principal engineer providing technical documentation and mentorship.
@@ -156,7 +156,7 @@ Your response MUST include:
 8. Suggestions for where to look for specific functionality
 
 Make your explanation clear, well-structured, and educational. Use markdown formatting with code blocks."#;
-        let user_prompt_2 = format!("Codebase Report:\n{}\n\nOriginal Query: {}\n\nKey Components Identified:\n{}\n\nNow provide a comprehensive technical explanation with code examples and clear structure.", context, prompt, key_points);
+        let user_prompt_2 = format!("Codebase Report:\n{context}\n\nOriginal Query: {prompt}\n\nKey Components Identified:\n{key_points}\n\nNow provide a comprehensive technical explanation with code examples and clear structure.");
         self.query(&self.model, system_prompt_2, &user_prompt_2).await
     }
 
