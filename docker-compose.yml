@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  ai-code-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: true
+    tty: true
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - GEMINI_API_KEYS=${GEMINI_API_KEYS:-}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.5-pro}
+      - TOKEN_CHAR_LIMIT=${TOKEN_CHAR_LIMIT:-200000}
+    # Note: This uses the codebase_viewer built into the Docker image.
+    # The AI will provide full paths to codebases in tool calls.
+    # For Docker to access Windows paths, you'd need to mount them as volumes.
+    command: ["--codebase-viewer-path", "/usr/local/bin/codebase_viewer"]
